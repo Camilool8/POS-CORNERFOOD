@@ -1,0 +1,30 @@
+<%- include('partials/html-dashboard') %>
+
+    <body>
+        <%- include('partials/navbar') %>
+
+            <div class="container">
+                <h1>Clientes</h1>
+
+                <div class="cards">
+                    <% clients.forEach(function(client) { %>
+                        <div class="card">
+                            <h2>
+                                <%= client.name %>
+                            </h2>
+                            <p>Telefono: <%= client.phone %>
+                            </p>
+                            <h5>Limite de credito: RD$<%= client.limit ? client.limit : 0 %>
+                            </h5>
+                            <h4>Deuda: RD$<%= client.debt ? client.debt : 0 %>
+                                    <h4>
+
+                                        <a href="/clients/<%= client._id %>" class="edit-button">Edit</a>
+                                        <a href="/clients/delete/<%= client._id %>" class="delete-button">Delete</a>
+                        </div>
+                        <% }) %>
+                </div>
+
+                <a href="/clients/new" class="new-sale-button">Añadir Cliente</a>
+            </div>
+    </body>

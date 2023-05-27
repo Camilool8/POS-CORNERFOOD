@@ -1,0 +1,82 @@
+<%- include('partials/html-dashboard') %>
+
+    <body>
+        <%- include('partials/navbar') %>
+
+            <!-- Products showcase (rows of 4) -->
+            <div class="container">
+                <div class="header">
+                    <h1>Productos</h1>
+                    <select name="category" onchange="filterProducts(this.value)">
+                        <option value="">Todos</option>
+                        <option value="Papitas">Papitas</option>
+                        <option value="Dulces">Dulces</option>
+                        <option value="Salados">Salados</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Galletas">Galletas</option>
+                        <option value="Chocolates">Chocolates</option>
+                        <option value="Cereales">Cereales</option>
+                    </select>
+                </div>
+
+                <div class="cards">
+                    <% if (products.length==0) { %>
+                        <h2 class="no-products-message">Oops! No hay productos de esta categoría.</h2>
+                        <% } else { %>
+                            <% products.forEach(function(product) { %>
+                                <div class="card">
+                                    <h2>
+                                        <%= product.name %>
+                                    </h2>
+                                    <img src="<%= product.image %>" alt="<%= product.name %>" />
+                                    <p>
+                                        Descripcion: <%= product.description %>
+                                    </p>
+                                    <p>
+                                        Precio: RD$<%= product.price %>
+                                    </p>
+                                    <p class="category">
+                                        Categoria: <%= product.category %>
+                                    </p>
+                                    <p>
+                                        <a href="/products/<%= product._id %>" class="edit-button">Edit</a>
+                                        <a href="/products/delete/<%= product._id %>" class="delete-button">Delete</a>
+                                    </p>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                </div>
+
+                <a href="/products/new" class="new-sale-button">Añadir Producto</a>
+            </div>
+
+            <script>
+                function filterProducts(category) {
+                    const cardsContainer = document.querySelector('.cards');
+                    const allCards = cardsContainer.querySelectorAll('.card');
+                    const message = cardsContainer.querySelector('.no-products-message');
+
+                    allCards.forEach(card => {
+                        const cardCategoryElement = card.querySelector('.category');
+                        if (cardCategoryElement) {
+                            const cardCategory = cardCategoryElement.textContent.split(':')[1].trim();
+                            if (category === '' || category === cardCategory) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    const visibleCards = Array.from(allCards).filter(card => card.style.display !== 'none');
+                    if (visibleCards.length === 0) {
+                        message.style.display = 'block';
+                    } else {
+                        message.style.display = 'none';
+                    }
+                }
+                // Set the initially selected category on page load
+                const initialCategory = '<%= selectedCategory || "" %>';
+                filterProducts(initialCategory);
+            </script>
+    </body>

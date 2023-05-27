@@ -1,0 +1,150 @@
+<%- include('partials/html-dashboard') %>
+
+    <body>
+        <%- include('partials/navbar') %>
+            <div class="container-checkout">
+                <div class="left-side row">
+                    <% products.forEach(function(product) { %>
+                        <div class="product-card col-xs-12 col-sm-4 col-md-3 col-xl-2">
+                            <h3>
+                                <%= product.name %>
+                            </h3>
+                            <p>Price: $<%= product.price %>
+                            </p>
+                            <img src="<%= product.image %>" alt="">
+                            <div class="quantity">
+                                <button class="decrease-button" data-product-id="<%= product._id %>">-</button>
+                                <input type="number" name="quantity" value="0" min="0"
+                                    data-product-id="<%= product._id %>">
+                                <button class="increase-button" data-product-id="<%= product._id %>">+</button>
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
+
+                <div class="right-side">
+                    <form class="checkout-form" action="/sales/checkout/cash" method="POST">
+                        <div class="summary-cash">
+                            <h2>Carrito</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="summaryTableBody">
+
+                                </tbody>
+                            </table>
+                            <h2>Total: RD$<span id="totalAmount">0</span></h2>
+                            <input type="hidden" id="totalAmountInput" name="totalAmount" value="0">
+                            <input type="hidden" id="selectedProducts" name="selectedProducts" value="">
+                            <input class=checkout-button type="submit" value="Checkout">
+                            <br>
+                            <h5 class="errorMessage" style="display: <%= display %>">
+                                Debe elegir al menos un producto.
+                            </h5>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+
+            <script>
+                // Add event listeners to the quantity buttons
+                const decreaseButtons = document.querySelectorAll('.decrease-button');
+                const increaseButtons = document.querySelectorAll('.increase-button');
+
+                decreaseButtons.forEach(button => {
+                    button.addEventListener('click', handleQuantityChange);
+                });
+
+                increaseButtons.forEach(button => {
+                    button.addEventListener('click', handleQuantityChange);
+                });
+
+                function handleQuantityChange(event) {
+                    const productId = event.target.dataset.productId;
+                    const quantityInput = document.querySelector(`input[data-product-id="${productId}"]`);
+                    const quantity = parseInt(quantityInput.value);
+
+                    if (event.target.classList.contains('decrease-button')) {
+                        if (quantity > 0) {
+                            quantityInput.value = quantity - 1;
+                        }
+                    } else if (event.target.classList.contains('increase-button')) {
+                        quantityInput.value = quantity + 1;
+                    }
+
+                    updateSelectedProducts();
+                    updateSummaryTable();
+                    updateTotalAmount();
+                }
+
+                function updateSelectedProducts() {
+                    const productCards = document.querySelectorAll('.product-card');
+                    const selectedProducts = [];
+
+                    productCards.forEach(card => {
+                        const productId = card.querySelector('input[name="quantity"]').dataset.productId;
+                        const quantity = parseInt(card.querySelector('input[name="quantity"]').value);
+
+                        if (quantity > 0) {
+                            const product = {
+                                productId: productId,
+                                quantity: quantity
+                            };
+                            selectedProducts.push(product);
+                        }
+                    });
+
+                    // Update the hidden input value for selectedProducts
+                    const selectedProductsInput = document.querySelector('#selectedProducts');
+                    selectedProductsInput.value = JSON.stringify(selectedProducts);
+                }
+
+                function updateSummaryTable() {
+                    const summaryTableBody = document.getElementById('summaryTableBody');
+                    summaryTableBody.innerHTML = '';
+
+                    const productCards = document.querySelectorAll('.product-card');
+                    productCards.forEach(card => {
+                        const productName = card.querySelector('h3').textContent;
+                        const quantity = parseInt(card.querySelector('input[name="quantity"]').value);
+                        const price = parseFloat(card.querySelector('p').textContent.replace('Price: $', ''));
+                        const totalPrice = (quantity * price).toFixed(2);
+
+                        if (quantity > 0) {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                <td>${productName}</td>
+                <td>${quantity}</td>
+                <td>$${totalPrice}</td>
+              `;
+                            summaryTableBody.appendChild(row);
+                        }
+                    });
+                }
+
+                function updateTotalAmount() {
+                    const summaryTableBody = document.getElementById('summaryTableBody');
+                    const totalAmountSpan = document.getElementById('totalAmount');
+                    const totalAmountInput = document.getElementById('totalAmountInput');
+                    let totalAmount = 0;
+
+                    // Calculate the total amount from the summary table
+                    const rows = summaryTableBody.querySelectorAll('tr');
+                    rows.forEach(row => {
+                        const priceCell = row.querySelector('td:last-child');
+                        const totalPrice = parseFloat(priceCell.textContent.replace('$', ''));
+                        totalAmount += totalPrice;
+                    });
+
+                    // Update the total amount in the HTML
+                    totalAmountSpan.textContent = totalAmount.toFixed(2);
+                    totalAmountInput.value = totalAmount.toFixed(2);
+                }
+            </script>
+    </body>

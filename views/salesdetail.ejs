@@ -1,0 +1,63 @@
+<%- include('partials/html-dashboard') %>
+
+    <body class="body-invoice">
+        <%- include('partials/navbar') %>
+            <div class="container-invoice">
+                <div class="invoice">
+                    <img src="/images/logo.png" alt="CornerFood" class="invoice-logo">
+                    <div class="invoice-details">
+                        <div class="invoice-info">
+                            <div class="info-section">
+                                <span class="info-label">ID Factura:</span>
+                                <span class="info-value">
+                                    <%= sale._id %>
+                                </span>
+                            </div>
+                            <div class="info-section">
+                                <span class="info-label">Fecha:</span>
+                                <span class="info-value">
+                                    <%= new Date(sale.date).toLocaleString() %>
+                                </span>
+                            </div>
+                            <div class="info-section">
+                                <span class="info-label">Cliente:</span>
+                                <span class="info-value">
+                                    <%= sale.client %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="invoice-total">
+                            <span class="total-label">Monto total:</span>
+                            <span class="total-value">RD$<%= sale.total %>.00</span>
+                        </div>
+                    </div>
+                    <table class="invoice-table">
+                        <thead>
+                            <tr>
+                                <th class="table-header">Producto</th>
+                                <th class="table-header">Cantidad</th>
+                                <th class="table-header">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% sale.products.forEach(function(product, index) { %>
+                                <% if (index> 0) { %>
+                                    <% } %>
+                                        <tr>
+                                            <td class="table-cell">
+                                                <%= product.name %>
+                                            </td>
+                                            <td class="table-cell">
+                                                <%= sale.quantity[index] %>
+                                            </td>
+                                            <td class="table-cell">$<%= product.price %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </body>
+
+    </html>

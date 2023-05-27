@@ -1,0 +1,33 @@
+<%- include('partials/html-dashboard') %>
+
+    <body>
+        <%- include('partials/navbar') %>
+
+            <!-- Form to set a new client -->
+            <div class="container">
+                <h1>Editar Producto</h1>
+
+                <form action="/products/<%= products._id  %>" method="POST">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" placeholder="Name" value="<%= products.name %>" />
+                    <label for="price">Precio</label>
+                    <input type="text" name="price" placeholder="Price" value="<%= products.price %>" />
+                    <label for="quantity">Cantidad</label>
+                    <input type="text" name="quantity" placeholder="Quantity" value="<%= products.quantity %>" />
+                    <label for="description">Descripción</label>
+                    <input type="text" name="description" placeholder="Description"
+                        value="<%= products.description %>" />
+                    <label for="image">Link de imagen</label>
+                    <input type="text" name="image" placeholder="Image" value="<%= products.image %>" />
+                    <label for="category">Categoría</label>
+                    <select name="category">
+                        <option value="Papitas">Papitas</option>
+                        <option value="Dulces">Dulces</option>
+                        <option value="Salados">Salados</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Galletas">Galletas</option>
+                        <option value="Chocolates">Chocolates</option>
+                        <option value="Cereales">Cereales</option>
+                    </select>
+                    <input type="submit" value="Editar" />
+                </form>

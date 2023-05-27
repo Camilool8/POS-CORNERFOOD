@@ -1,0 +1,26 @@
+<%- include('partials/html-dashboard') %>
+
+    <body>
+        <%- include('partials/navbar') %>
+
+            <!-- Form to set a new client -->
+            <div class="container">
+                <h1>Añadir Producto</h1>
+
+                <form action="/products" method="POST">
+                    <input type="text" name="name" placeholder="Nombre" />
+                    <input type="text" name="price" placeholder="Precio" />
+                    <input type="text" name="quantity" placeholder="Cantidad" />
+                    <input type="text" name="description" placeholder="Descripcion" />
+                    <input type="text" name="image" placeholder="Link de imagen" />
+                    <select name="category">
+                        <option value="Papitas">Papitas</option>
+                        <option value="Dulces">Dulces</option>
+                        <option value="Salados">Salados</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Galletas">Galletas</option>
+                        <option value="Chocolates">Chocolates</option>
+                        <option value="Cereales">Cereales</option>
+                    </select>
+                    <input type="submit" value="Añadir" />
+                </form>
