@@ -6,7 +6,8 @@ const message = "This user already exists!";
 const display = "none";
 
 router.get("/", (req, res) => {
-  res.render("login");
+  let message = "";
+  res.render("login", { message: message, display: display });
 });
 
 router.post("/login", async (req, res) => {
@@ -14,10 +15,18 @@ router.post("/login", async (req, res) => {
   const password = req.body.password;
 
   await User.findOne({ name: name }).then((user) => {
-    if (user.password === password) {
-      res.redirect("/dashboard");
+    if (!user) {
+      let display = "block";
+      let message = "Ha habido un error con el usuario o la contraseña";
+      res.render("login", { message: message, display: display });
     } else {
-      res.redirect("/");
+      if (user.password === password) {
+        res.redirect("/dashboard");
+      } else {
+        let display = "block";
+        let message = "Ha habido un error con el usuario o la contraseña";
+        res.render("login", { message: message, display: display });
+      }
     }
   });
 });
