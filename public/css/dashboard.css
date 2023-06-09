@@ -57,6 +57,13 @@ h1 {
   color: #333;
 }
 
+h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -486,6 +493,119 @@ input[type="number"] {
 .table-cell {
   padding: 10px;
   border-bottom: 1px solid #ddd;
+}
+
+/* Inventory */
+
+.body-inventory {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+.title-inventory {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+
+.container-inventory {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.time-selector {
+  margin-bottom: 20px;
+}
+
+.date-input {
+  margin-right: 10px;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fetch-button {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.fetch-button:hover {
+  background-color: #0056b3;
+}
+
+.total-amount {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+.total-value-inventory {
+  font-size: 24px;
+  font-weight: bold;
+  /* color black */
+  color: #333;
+}
+
+.transaction {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.transaction-info {
+  margin-bottom: 10px;
+}
+
+.transaction-label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.transaction-products table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.transaction-products th,
+.transaction-products td {
+  padding: 10px;
+  text-align: center; /* align text to the center */
+  border-bottom: 1px solid #ddd;
+}
+
+.transaction-products th {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.product {
+  margin-bottom: 5px;
+}
+
+.product-label {
+  font-weight: bold;
+  margin-right: 5px;
 }
 
 /* MOBILE CODE */

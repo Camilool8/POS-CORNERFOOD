@@ -16,7 +16,8 @@
                             <div class="info-section">
                                 <span class="info-label">Fecha:</span>
                                 <span class="info-value">
-                                    <%= new Date(sale.date).toLocaleString() %>
+                                    <%= new Date(sale.date).toLocaleString('en-US', { timeZone: 'America/Santo_Domingo'
+                                        }) %>
                                 </span>
                             </div>
                             <div class="info-section">

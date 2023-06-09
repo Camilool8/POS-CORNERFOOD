@@ -43,7 +43,8 @@
                             <% sales.sort((a, b)=> b.date - a.date).forEach(function(sale) { %>
                                 <tr class="table-row-sales" data-client="<%= sale.client %>">
                                     <td class="table-cell-sales">
-                                        <%= new Date(sale.date).toLocaleString() %>
+                                        <%= new Date(sale.date).toLocaleString('en-US', {
+                                            timeZone: 'America/Santo_Domingo' }) %>
                                     </td>
                                     <td class="table-cell-sales">
                                         <%= sale.client %>

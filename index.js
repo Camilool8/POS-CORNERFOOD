@@ -27,12 +27,14 @@ const dashboardRoutes = require("./routes/dashboard");
 const clientsRoutes = require("./routes/clients");
 const productsRoutes = require("./routes/products");
 const salesRoutes = require("./routes/sales");
+const inventoryRoutes = require("./routes/inventory");
 
 app.use("/", indexRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/clients", clientsRoutes);
 app.use("/products", productsRoutes);
 app.use("/sales", salesRoutes);
+app.use("/inventory", inventoryRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
