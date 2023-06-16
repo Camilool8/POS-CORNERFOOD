@@ -46,8 +46,12 @@
                                         <%= new Date(sale.date).toLocaleString('en-US', {
                                             timeZone: 'America/Santo_Domingo' }) %>
                                     </td>
-                                    <td class="table-cell-sales">
-                                        <%= sale.client %>
+                                    <td class=<% if (sale.client !=='Efectivo' ) { %>
+                                        "table-cell-sales-credit"
+                                        <% } else { %>
+                                            "table-cell-sales-cash"
+                                            <% } %>>
+                                                <%= sale.client.substring(0, 30) %>
                                     </td>
                                     <td class="table-cell-sales">
                                         <% sale.products.forEach(function(product, index) { %>
@@ -70,7 +74,7 @@
                 </div>
             </div>
 
-            <a href="/sales/question" class="new-sale-button">Nueva venta</a>
+            <a href="/sales/question" class="new-sale-button-fixed">Nueva venta</a>
 
             <script>
                 function filterSales(client) {

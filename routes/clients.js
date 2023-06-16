@@ -63,4 +63,17 @@ router.get("/delete/:id", async (req, res) => {
   });
 });
 
+router.get("/payoff/:id", async (req, res) => {
+  const id = req.params.id;
+
+  await Client.findById(id)
+    .then((client) => {
+      client.debt = 0;
+      client.save();
+    })
+    .finally(() => {
+      res.redirect("/clients");
+    });
+});
+
 module.exports = router;

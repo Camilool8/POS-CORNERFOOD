@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Sale = require("../models/sale");
+const Client = require("../models/client");
 
 router.get("/", async (req, res) => {
   // Parse start and end dates from the query parameters
@@ -23,8 +24,13 @@ router.get("/", async (req, res) => {
     },
   }).populate("products");
 
+  // Fetch clients
+  let clients = await Client.find();
+
   // Calculate total amount from sales
   let totalAmount = sales.reduce((total, sale) => total + sale.total, 0);
+
+  let debt = 0;
 
   // Render the inventory page
   res.render("inventory", {
@@ -32,6 +38,8 @@ router.get("/", async (req, res) => {
     endDate: endDate,
     sales: sales,
     totalAmount: totalAmount,
+    clients: clients,
+    debt: debt,
   });
 });
 

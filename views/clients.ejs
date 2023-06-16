@@ -18,9 +18,10 @@
                             </h5>
                             <h4>Deuda: RD$<%= client.debt ? client.debt : 0 %>
                                     <h4>
+                                        <a href="/clients/payoff/<%= client._id %>" class="payoff-button">Pagar</a>
+                                        <a href="/clients/<%= client._id %>" class="edit-button">Editar</a>
+                                        <a href="/clients/delete/<%= client._id %>" class="delete-button">Borrar</a>
 
-                                        <a href="/clients/<%= client._id %>" class="edit-button">Edit</a>
-                                        <a href="/clients/delete/<%= client._id %>" class="delete-button">Delete</a>
                         </div>
                         <% }) %>
                 </div>

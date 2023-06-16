@@ -5,11 +5,16 @@
             <div class="container-inventory">
                 <!-- Title -->
                 <h1 class="title-inventory">Inventario desde
-                    <%= new Intl.DateTimeFormat('es-DO', { year: 'numeric' , month: 'long' , day: 'numeric' ,
-                        timeZone: 'America/Santo_Domingo' }).format(new Date(startDate)) %>
-                        hasta
-                        <%= new Intl.DateTimeFormat('es-DO', { year: 'numeric' , month: 'long' , day: 'numeric' ,
-                            timeZone: 'America/Santo_Domingo' }).format(new Date(endDate)) %>
+                    <% let startDateplusone=new Date(startDate); %>
+                        <% startDateplusone.setDate(startDateplusone.getDate() + 1); %>
+                            <%= new Intl.DateTimeFormat('es-DO', { year: 'numeric' , month: 'long' , day: 'numeric' ,
+                                timeZone: 'America/Santo_Domingo' }).format(new Date(startDateplusone)) %>
+                                hasta
+                                <% let endDateplusone=new Date(endDate); %>
+                                    <% endDateplusone.setDate(endDateplusone.getDate() + 1); %>
+                                        <%= new Intl.DateTimeFormat('es-DO', { year: 'numeric' , month: 'long' ,
+                                            day: 'numeric' , timeZone: 'America/Santo_Domingo' }).format(new
+                                            Date(endDateplusone)) %>
                 </h1>
                 <!-- Time selector -->
                 <div class="time-selector">
@@ -20,9 +25,31 @@
 
                 <!-- Dynamic total amount -->
                 <div class="total-amount">
-                    <span class="total-label">Total Vendido:</span>
-                    <span class="total-value-inventory">RD$<%= totalAmount %>.00</span>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="total-label">Total Bruto</th>
+                                <th class="debt-label">Deuda</th>
+                                <th class="true-total-label">Total Neto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="total-value-inventory">RD$<%= totalAmount %>.00</td>
+
+                                <td class="debt-value-inventory">
+                                    <% clients.forEach((client)=> { %>
+                                        <% debt +=client.debt; %>
+                                            <% }); %>
+                                                RD$<%= debt %>.00
+
+                                </td>
+                                <td class="true-total-value-inventory">RD$<%= totalAmount - debt %>.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+
 
                 <!-- List of all transactions -->
                 <div class="transactions">
@@ -78,12 +105,12 @@
 
                         // add 1 day to startDate to include the selected day
                         let startDateObj = new Date(startDate);
-                        startDateObj.setDate(startDateObj.getDate() + 1);
+                        startDateObj.setDate(startDateObj.getDate());
                         startDate = startDateObj.toISOString().split('T')[0];
 
                         // add 1 day to endDate to include the selected day
                         let endDateObj = new Date(endDate);
-                        endDateObj.setDate(endDateObj.getDate() + 1);
+                        endDateObj.setDate(endDateObj.getDate());
                         endDate = endDateObj.toISOString().split('T')[0];
 
                         window.location.href = `/inventory?startDate=${startDate}&endDate=${endDate}`;
