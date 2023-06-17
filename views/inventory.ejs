@@ -25,31 +25,60 @@
 
                 <!-- Dynamic total amount -->
                 <div class="total-amount">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="total-label">Total Bruto</th>
-                                <th class="debt-label">Deuda</th>
-                                <th class="true-total-label">Total Neto</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="total-value-inventory">RD$<%= totalAmount %>.00</td>
-
-                                <td class="debt-value-inventory">
-                                    <% clients.forEach((client)=> { %>
-                                        <% debt +=client.debt; %>
-                                            <% }); %>
-                                                RD$<%= debt %>.00
-
-                                </td>
-                                <td class="true-total-value-inventory">RD$<%= totalAmount - debt %>.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="total-wrapper">
+                        <table class="cash-table">
+                            <thead>
+                                <tr>
+                                    <th>Total Efectivo</th>
+                                    <th>Total Crédito</th>
+                                    <th>Total Bruto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>RD$<%= cashAmount %>.00</td>
+                                    <td>RD$<%= creditAmount %>.00</td>
+                                    <td>RD$<%= cashAmount + creditAmount %>.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="total-wrapper">
+                        <table class="debt-table">
+                            <thead>
+                                <tr>
+                                    <th>Total Deuda</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <% clients.forEach((client)=> { %>
+                                            <% debt +=client.debt; %>
+                                                <% }); %>
+                                                    RD$<%= debt %>.00
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="total-wrapper">
+                        <table class="net-table">
+                            <thead>
+                                <tr>
+                                    <th>Total Crédito Neto</th>
+                                    <th>Total Neto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>RD$<%= creditAmount - debt %>.00</td>
+                                    <td>RD$<%= cashAmount + creditAmount - debt %>.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
 
                 <!-- List of all transactions -->
                 <div class="transactions">

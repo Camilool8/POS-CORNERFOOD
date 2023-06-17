@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const clientSchema = new mongoose.Schema({
   name: String,
   phone: String,
+  comments: String,
   limit: Number,
   debt: Number,
   date: { type: Date, default: Date.now },

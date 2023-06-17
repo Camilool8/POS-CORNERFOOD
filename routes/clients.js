@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Client = require("../models/client");
+const Sale = require("../models/sale");
 
 router.get("/", async (req, res) => {
   await Client.find().then((clients) => {
@@ -11,11 +12,13 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const name = req.body.name;
   const phone = req.body.phone;
+  const comments = req.body.comments;
   const limit = req.body.limit;
 
   const newClient = new Client({
     name,
     phone,
+    comments,
     limit,
     debt: 0,
   });
@@ -28,6 +31,7 @@ router.post("/:id", async (req, res) => {
   const id = req.params.id;
   const name = req.body.name;
   const phone = req.body.phone;
+  const comments = req.body.comments;
   const limit = req.body.limit;
   const debt = req.body.debt;
 
@@ -36,6 +40,7 @@ router.post("/:id", async (req, res) => {
     {
       name,
       phone,
+      comments,
       limit,
       debt,
     }
@@ -70,10 +75,28 @@ router.get("/payoff/:id", async (req, res) => {
     .then((client) => {
       client.debt = 0;
       client.save();
+      Sale.find({ client: client.name }).then((sales) => {
+        sales.forEach((sale) => {
+          sale.isPaid = true;
+          sale.save();
+        });
+      });
     })
     .finally(() => {
       res.redirect("/clients");
     });
+});
+
+router.get("/invoices/:id", async (req, res) => {
+  const id = req.params.id;
+
+  await Client.findById(id).then((client) => {
+    Sale.find({ client: client.name })
+      .populate("products")
+      .then((sales) => {
+        res.render("clientinvoices", { sales: sales });
+      });
+  });
 });
 
 module.exports = router;

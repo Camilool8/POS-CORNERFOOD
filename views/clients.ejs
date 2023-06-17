@@ -12,7 +12,11 @@
                             <h2>
                                 <%= client.name %>
                             </h2>
-                            <p>Telefono: <%= client.phone %>
+                            <p>
+                                Telefono: <%= client.phone ? client.phone : 'N/A' %>
+                            </p>
+                            <p class="client-comments">
+                                Comentarios: <%= client.comments ? client.comments : 'N/A' %>
                             </p>
                             <h5>Limite de credito: RD$<%= client.limit ? client.limit : 0 %>
                             </h5>
@@ -20,6 +24,8 @@
                                     <h4>
                                         <a href="/clients/payoff/<%= client._id %>" class="payoff-button">Pagar</a>
                                         <a href="/clients/<%= client._id %>" class="edit-button">Editar</a>
+                                        <a href="/clients/invoices/<%= client._id %>"
+                                            class="invoices-button">Facturas</a>
                                         <a href="/clients/delete/<%= client._id %>" class="delete-button">Borrar</a>
 
                         </div>

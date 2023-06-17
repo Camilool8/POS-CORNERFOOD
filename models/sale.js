@@ -6,6 +6,7 @@ const saleSchema = new mongoose.Schema({
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   quantity: [Number],
   total: Number,
+  isPaid: Boolean,
   date: { type: Date, default: Date.now },
 });
 

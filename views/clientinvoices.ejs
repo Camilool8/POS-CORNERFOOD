@@ -1,0 +1,101 @@
+<%- include('partials/html-dashboard') %>
+
+    <body class="body-invoice">
+        <%- include('partials/navbar') %>
+            <div class="container-invoice">
+                <div class="invoice">
+                    <button id="capture"><img class="pdf-image" src="/images/pdf.png"></button>
+                    <img src="/images/logo.png" alt="CornerFood" class="invoice-logo">
+                    <% if(sales.length> 0) { %>
+                        <div class="details-section">
+                            <div class="client-details">
+                                <span class="client-tag">Cliente:</span>
+                                <h1 class="client-name">
+                                    <%= sales[0].client %>
+                                </h1>
+                            </div>
+                            <div class="total-details">
+                                <h3 class="total-tag">Monto total:</h3>
+                                <p class="total-amount">RD$<%= sales.reduce((total, sale)=> sale.isPaid ? total : total
+                                        + sale.total, 0) %>.00
+                                </p>
+                            </div>
+                        </div>
+
+                        <% sales.sort((a, b)=> b.date - a.date).forEach(function(sale) { %>
+                            <div class="sale-card">
+                                <div class="invoice-details">
+                                    <div class="invoice-info">
+                                        <div class="info-section">
+                                            <span class="info-label">ID Factura:</span>
+                                            <span class="info-value">
+                                                <%= sale._id %>
+                                            </span>
+                                        </div>
+                                        <div class="info-section">
+                                            <span class="info-label">Fecha:</span>
+                                            <span class="info-value">
+                                                <%= new Date(sale.date).toLocaleString('en-US', {
+                                                    timeZone: 'America/Santo_Domingo' }) %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="invoice-total">
+                                        <span class=<% if (sale.isPaid) { %> "invoice-ispaid-label" <% } else { %>
+                                                "invoice-isnotpaid-label" <% } %>>
+                                                    <% if (sale.isPaid) { %> Pagado <% } else { %> No pagado <% } %>
+                                        </span>
+                                        <span class="invoice-total-label">Monto total:</span>
+                                        <span class="invoice-total-value">RD$<%= sale.total %>.00</span>
+                                    </div>
+                                </div>
+                                <table class="invoice-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-header">Producto</th>
+                                            <th class="table-header">Cantidad</th>
+                                            <th class="table-header">Precio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% sale.products.forEach(function(product, index) { %>
+                                            <tr>
+                                                <td class="table-cell">
+                                                    <%= product.name %>
+                                                </td>
+                                                <td class="table-cell">
+                                                    <%= sale.quantity[index] %>
+                                                </td>
+                                                <td class="table-cell">$<%= product.price %>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <h1 class="no-sales-header">Este Cliente no ha realizado compras</h1>
+                                    <% } %>
+                </div>
+            </div>
+            <script>
+                document.getElementById('capture').addEventListener('click', function () {
+                    var element = document.querySelector('.invoice');
+                    var opt = {
+                        margin: 1,
+                        filename: 'invoice.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2 },
+                        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    };
+
+                    html2pdf().set(opt).from(element).save();
+                });
+            </script>
+
+
+
+    </body>
+
+    </html>

@@ -28,6 +28,10 @@
                             </div>
                         </div>
                         <div class="invoice-total">
+                            <span class=<% if (sale.isPaid) { %> "invoice-ispaid-label" <% } else { %>
+                                    "invoice-isnotpaid-label" <% } %>>
+                                        <% if (sale.isPaid) { %> Pagado <% } else { %> No pagado <% } %>
+                            </span>
                             <span class="invoice-total-label">Monto total:</span>
                             <span class="invoice-total-value">RD$<%= sale.total %>.00</span>
                         </div>

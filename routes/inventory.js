@@ -27,8 +27,21 @@ router.get("/", async (req, res) => {
   // Fetch clients
   let clients = await Client.find();
 
-  // Calculate total amount from sales
-  let totalAmount = sales.reduce((total, sale) => total + sale.total, 0);
+  // Calculate total amount from sales that are not cash
+  let creditAmount = 0;
+  sales.forEach((sale) => {
+    if (sale.client !== "Efectivo") {
+      creditAmount += sale.total;
+    }
+  });
+
+  // Calculate total amount from sales that are cash
+  let cashAmount = 0;
+  sales.forEach((sale) => {
+    if (sale.client === "Efectivo") {
+      cashAmount += sale.total;
+    }
+  });
 
   let debt = 0;
 
@@ -37,7 +50,8 @@ router.get("/", async (req, res) => {
     startDate: startDate,
     endDate: endDate,
     sales: sales,
-    totalAmount: totalAmount,
+    creditAmount: creditAmount,
+    cashAmount: cashAmount,
     clients: clients,
     debt: debt,
   });

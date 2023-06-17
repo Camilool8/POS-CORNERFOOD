@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f1f1f1;
@@ -204,6 +206,22 @@ select {
 }
 
 .payoff-button:hover {
+  background-color: #3366cc;
+  color: #fff;
+}
+
+.invoices-button {
+  background-color: #3897f0;
+  color: #fff;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.invoices-button:hover {
   background-color: #3366cc;
   color: #fff;
 }
@@ -490,6 +508,7 @@ input[type="number"] {
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .invoice-heading {
@@ -506,6 +525,23 @@ input[type="number"] {
   margin-bottom: 20px;
 }
 
+.sale-card {
+  width: 80%;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.sale-card .invoice-details {
+  margin-bottom: 20px;
+}
+
+.sale-card .invoice-table {
+  width: 100%;
+}
+
 .invoice-info {
   flex: 1;
 }
@@ -520,6 +556,28 @@ input[type="number"] {
 
 .invoice-total {
   flex-shrink: 0;
+}
+
+.invoice-ispaid-label {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  display: block;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.invoice-isnotpaid-label {
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  display: block;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .invoice-total-label {
@@ -547,6 +605,44 @@ input[type="number"] {
 .table-cell {
   padding: 10px;
   border-bottom: 1px solid #ddd;
+}
+
+.details-section {
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.client-details,
+.total-details {
+  margin: 10px 0; /* add some vertical spacing */
+}
+
+.client-tag {
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #333; /* dark gray */
+  display: none; /* hide by default */
+}
+
+.client-name {
+  font-size: 2em;
+  font-weight: 700;
+  color: #007b5e; /* dark green */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* subtle shadow for depth */
+}
+
+.total-tag {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #333; /* dark gray */
+}
+
+.total-amount {
+  font-size: 2em;
+  font-weight: 700;
+  color: #007b5e; /* dark green */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* subtle shadow for depth */
 }
 
 /* Inventory */
@@ -603,13 +699,6 @@ input[type="number"] {
   background-color: #0056b3;
 }
 
-.total-amount {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #007bff;
-}
-
 .total-value-inventory {
   font-size: 24px;
   font-weight: bold;
@@ -636,41 +725,110 @@ input[type="number"] {
   width: 40%;
 }
 
-.total-amount table {
+.total-wrapper {
   width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
 }
 
-.total-amount th,
-.total-amount td {
-  padding: 10px;
-  text-align: left;
+.total-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px; /* adjust to your needs */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cash-table,
+.debt-table,
+.net-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.cash-table th,
+.cash-table td,
+.debt-table th,
+.debt-table td,
+.net-table th,
+.net-table td {
+  font-family: "Roboto", sans-serif; /* New stylish font */
+  font-size: 18px; /* Increased font size */
+  padding: 15px;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
-.total-amount th {
-  background-color: #f2f2f2;
+.cash-table th,
+.cash-table td {
+  width: 33.333%;
+}
+
+.net-table th,
+.net-table td {
+  width: 50%;
+}
+
+.cash-table th,
+.debt-table th,
+.net-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+}
+
+.debt-table th,
+.debt-table td {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.cash-table th {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.debt-table th {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.net-table th {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.cash-table td,
+.debt-table td,
+.net-table td {
+  text-align: center;
+}
+
+.cash-table td:nth-child(3),
+.net-table td:nth-child(3) {
+  font-weight: 600;
+}
+
+.cash-table:hover,
+.debt-table:hover,
+.net-table:hover {
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+  transform: scale(1.03);
+}
+
+.cash-table tbody tr:last-child,
+.debt-table tbody tr:last-child,
+.net-table tbody tr:last-child {
   font-weight: bold;
-}
-
-.total-amount td.total-value-inventory {
-  background-color: #3897f0;
-  color: #fff;
-}
-
-.total-amount td.debt-value-inventory {
-  background-color: #f44336;
-  color: #fff;
-}
-
-.total-amount td.true-total-value-inventory {
-  background-color: #4caf50;
-  color: #fff;
-}
-
-.total-amount tbody tr:hover {
-  background-color: #f5f5f5;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .transaction {
@@ -715,6 +873,29 @@ input[type="number"] {
 .product-label {
   font-weight: bold;
   margin-right: 5px;
+}
+
+/* Hot Fix */
+
+.client-comments {
+  background-color: #ffe4b2;
+  padding: 5px;
+  color: #000;
+  border-radius: 5px;
+}
+
+#capture {
+  border: none;
+  background-color: transparent;
+  margin-right: 15px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#capture .pdf-image {
+  width: 30px;
+  height: 30px;
 }
 
 /* MOBILE CODE */

@@ -125,6 +125,7 @@ router.post("/checkout", async (req, res) => {
       products: Dbproducts,
       quantity: Dbquantities,
       total: totalAmount,
+      isPaid: false,
       date: moment().tz("America/Santo_Domingo").toDate(),
     });
 
@@ -189,6 +190,7 @@ router.post("/checkout/cash", async (req, res) => {
       products: Dbproducts,
       quantity: Dbquantities,
       total: totalAmount,
+      isPaid: true,
       date: moment().tz("America/Santo_Domingo").toDate(),
     });
 
