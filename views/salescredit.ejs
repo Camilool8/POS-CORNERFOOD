@@ -24,14 +24,17 @@
                 </div>
 
                 <div class="right-side">
-                    <h2>Clientes</h2>
+                    <h2 id="client-header">Clientes <span id="client-comment"></span></h2>
+
                     <form class="checkout" action="/sales/checkout/" method="POST">
                         <div class="clients-container">
                             <ul class="client-list">
                                 <% clients.forEach(function(client) { %>
                                     <li>
                                         <label class="clients-label">
-                                            <input type="radio" name="client" value="<%= client._id %>">
+                                            <input type="radio" name="client" value="<%= client._id %>"
+                                                data-comment="<%= client.comments %>">
+
                                             <%= client.name %>
                                     </li>
                                     <% }) %>
@@ -160,5 +163,21 @@
                     totalAmountSpan.textContent = totalAmount.toFixed(2);
                     totalAmountInput.value = totalAmount.toFixed(2);
                 }
+
+                const radioButtons = document.querySelectorAll('input[type="radio"][name="client"]');
+                const clientComment = document.getElementById('client-comment');
+                radioButtons.forEach(radio => {
+                    radio.addEventListener('change', function () {
+                        if (this.checked) {
+                            if (this.dataset.comment) {
+                                clientComment.textContent = ` ${this.dataset.comment}`;
+                                clientComment.style.display = 'inline';
+                                clientComment.classList.remove('empty');
+                            } else {
+                                clientComment.style.display = 'none';
+                            }
+                        }
+                    });
+                });
             </script>
     </body>

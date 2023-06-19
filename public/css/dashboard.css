@@ -884,6 +884,15 @@ input[type="number"] {
   border-radius: 5px;
 }
 
+#client-comment {
+  background-color: #ffe4b2;
+  padding: 5px;
+  color: #000;
+  border-radius: 5px;
+  font-size: 18px;
+  display: none;
+}
+
 #capture {
   border: none;
   background-color: transparent;
