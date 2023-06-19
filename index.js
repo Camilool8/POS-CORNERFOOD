@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 const app = express();
 dotenv.config();
 
@@ -19,6 +20,7 @@ mongoose
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 

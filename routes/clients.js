@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
   res.redirect("/clients");
 });
 
-router.post("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const id = req.params.id;
   const name = req.body.name;
   const phone = req.body.phone;
@@ -35,18 +35,29 @@ router.post("/:id", async (req, res) => {
   const limit = req.body.limit;
   const debt = req.body.debt;
 
-  await Client.replaceOne(
-    { _id: id },
-    {
-      name,
-      phone,
-      comments,
-      limit,
-      debt,
-    }
-  ).then(() => {
-    res.redirect("/clients");
-  });
+  Client.findById(id)
+    .then(async (client) => {
+      await Sale.find({ client: client.name }).then((sales) => {
+        sales.forEach((sale) => {
+          sale.client = name;
+          sale.save();
+        });
+      });
+    })
+    .finally(async () => {
+      await Client.replaceOne(
+        { _id: id },
+        {
+          name,
+          phone,
+          comments,
+          limit,
+          debt,
+        }
+      ).then(() => {
+        res.redirect("/clients");
+      });
+    });
 });
 
 router.get("/new", (req, res) => {

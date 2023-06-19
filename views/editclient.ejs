@@ -7,7 +7,8 @@
             <div class="container">
                 <h1>Editar Cliente</h1>
 
-                <form action="/clients/<%= clients._id  %>" method="POST">
+                <form action="/clients/<%= clients._id  %>?_method=PUT" method="POST">
+                    <input type="hidden" name="_method" value="PUT" />
                     <label for="name">Nombre</label>
                     <input type="text" name="name" placeholder="Nombre" value="<%= clients.name %>" />
                     <label for="phone">Telefono</label>
@@ -21,7 +22,6 @@
                     <input type="submit" value="Update" />
                 </form>
             </div>
-
     </body>
 
     </html>
