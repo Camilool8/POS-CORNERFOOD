@@ -514,7 +514,7 @@ input[type="number"] {
 
 .container-invoice {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 118px auto;
   padding: 20px;
 }
 
@@ -663,13 +663,6 @@ input[type="number"] {
   color: #333; /* dark gray */
 }
 
-.total-amount {
-  font-size: 2em;
-  font-weight: 700;
-  color: #333;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* subtle shadow for depth */
-}
-
 /* Inventory */
 
 .body-inventory {
@@ -763,6 +756,10 @@ input[type="number"] {
   max-width: 800px; /* adjust to your needs */
   margin-left: auto;
   margin-right: auto;
+  font-size: 2em;
+  font-weight: 700;
+  color: #333;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* subtle shadow for depth */
 }
 
 .cash-table,
