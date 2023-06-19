@@ -1,6 +1,6 @@
 <%- include('partials/html-dashboard') %>
 
-    <body>
+    <body class="sales-body">
         <%- include('partials/navbar') %>
 
             <div class="container-checkout">
@@ -25,11 +25,16 @@
 
                 <div class="right-side">
                     <h2 id="client-header">Clientes <span id="client-comment"></span></h2>
+                    <!-- Search bar -->
+
+                    <div class="search-bar">
+                        <input type="text" id="search-bar" placeholder="Buscar cliente">
+                    </div>
 
                     <form class="checkout" action="/sales/checkout/" method="POST">
                         <div class="clients-container">
                             <ul class="client-list">
-                                <% clients.forEach(function(client) { %>
+                                <% clients.sort((a, b)=> a.name.localeCompare(b.name)).forEach(function(client) { %>
                                     <li>
                                         <label class="clients-label">
                                             <input type="radio" name="client" value="<%= client._id %>"
@@ -176,6 +181,22 @@
                             } else {
                                 clientComment.style.display = 'none';
                             }
+                        }
+                    });
+                });
+
+                const searchBar = document.getElementById('search-bar');
+                const clientList = document.querySelector('.client-list');
+                searchBar.addEventListener('keyup', function () {
+                    const searchValue = searchBar.value.toLowerCase();
+                    const clients = clientList.querySelectorAll('li');
+
+                    clients.forEach(client => {
+                        const clientName = client.textContent.toLowerCase();
+                        if (clientName.includes(searchValue)) {
+                            client.style.display = 'block';
+                        } else {
+                            client.style.display = 'none';
                         }
                     });
                 });
