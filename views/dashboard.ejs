@@ -4,6 +4,8 @@
         <%- include('partials/navbar') %>
             <div class="container-sales">
                 <div class="header-sales">
+                    <a href="/sales/question" class="new-sale-button-fixed">Nueva venta</a>
+
                     <h1 class="title-sales">Ventas</h1>
                     <select class="select-sales" id="select-sales" onchange="filterSales(this.value)">
                         <option value="">Todos los clientes</option>
@@ -73,9 +75,6 @@
                     </table>
                 </div>
             </div>
-
-            <a href="/sales/question" class="new-sale-button-fixed">Nueva venta</a>
-
             <script>
                 function filterSales(client) {
                     const rows = document.getElementsByClassName('table-row-sales');
