@@ -348,7 +348,19 @@ input[type="number"] {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.search-cliente {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 20px;
+}
 
+.search-input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px;
+}
 .right-side .clients-container {
   overflow-y: auto;
   max-height: 250px;

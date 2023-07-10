@@ -5,7 +5,9 @@
 
             <div class="container">
                 <h1>Clientes</h1>
-
+                <div class="search-client">
+                    <input type="text" id="search-client" class="search-input" placeholder="Buscar cliente">
+                </div>
                 <div class="cards">
                     <% clients.forEach(function(client) { %>
                         <div class="card">
@@ -34,4 +36,26 @@
 
                 <a href="/clients/new" class="new-sale-button">Añadir Cliente</a>
             </div>
+
+            <script>
+                const searchClient = document.getElementById('search-client');
+                const cards = document.querySelectorAll('.card');
+
+                searchClient.addEventListener('keyup', (e) => {
+                    const searchString = e.target.value.toLowerCase();
+
+                    cards.forEach(card => {
+                        const name = card.querySelector('h2').innerText.toLowerCase();
+                        const phone = card.querySelector('p').innerText.toLowerCase();
+                        const comments = card.querySelector('.client-comments').innerText.toLowerCase();
+
+                        if (name.includes(searchString) || phone.includes(searchString) || comments.includes(
+                            searchString)) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    })
+                })
+            </script>
     </body>
